@@ -6,7 +6,6 @@ function Register(){
 const [name, setName] = useState('');
 const [username, setUsername] = useState('');
 const [password, setPassword] = useState('');
-//const [rePassword, setRePassword]
 const [message, setMessage] = useState('');
 
 
