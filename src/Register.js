@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Register(){
 
@@ -43,7 +44,7 @@ const [message, setMessage] = useState('');
     axios.post('http://localhost:8080/api/user/create', dataToSend)
     .then((response) => {
     console.log(response.data);
-    setMessage(`Hello ${response.data.name}! Thank you for registering with us with a username: {response.data.username}`);
+    setMessage(`Hello ${response.data.name}! Thank you for registering with us with a username: ${response.data.username}`);
 
     setName('');
     setUsername('');
@@ -76,7 +77,7 @@ const [message, setMessage] = useState('');
 
               <button type="submit" className="submit-button" >Register with Intra Foundation </button>
               <p className="message">{message}</p>
-              <p className="log-in">Please <a href="/login">Login</a> to access you account</p>
+              <p className="log-in">Please <Link to="/Login">Login</Link> to access you account</p>
           </form>
           </div>
       </div>

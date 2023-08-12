@@ -1,12 +1,13 @@
-import Register from './Register';
-import './App.css';
+import React, {useState} from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppContainer from './AppContainer';
 
 function App() {
+const [authenticated, setAuthenticated] = useState(false);
   return (
-    <div className="App">
-    <h1> Login </h1>
-    <Register/>
-    </div>
+    <Router>
+      <AppContainer authenticated = {authenticated} setAuthenticated = {setAuthenticated}/>
+    </Router>
   );
 }
 
