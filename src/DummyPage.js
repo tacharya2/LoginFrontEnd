@@ -1,16 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useAuthentication } from './AuthenticationContext';
+import { Navigate } from 'react-router-dom';
 
 function DummyPage() {
-    return (
-        <div>
-            <h2>Welcome to the Dummy Page</h2>
-            {/* Add your content here */}
-            <h1>Successfully Visited your account</h1>
-            <p>We are growing this page. Please visit it later </p>
-            <p className="log-in">Please <Link to="/Register">click here</Link> to register another account</p>
-        </div>
-    );
+  const { authenticated } = useAuthentication();
+
+  // Redirect to login page if not authenticated
+  if (!authenticated) {
+    return <Navigate to="/Login" />;
+  }
+
+  // Render the DummyPage content for authenticated users
+  return (
+    <div>
+      <h1>Welcome to this Dummy Page</h1>
+      {/* Add your content here */}
+      <h2>Your future account activity will be accounted here</h2>
+      <p>We are growing this page. Please visit it later</p>
+    </div>
+  );
 }
 
 export default DummyPage;

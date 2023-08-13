@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuthentication } from './AuthenticationContext';
 
 function Login(){
 const [username, setUsername] = useState('');
 const [password, setPassword] = useState('');
 const [errorMessage, setErrorMessage] = useState('');
+   const { setAuthenticated } = useAuthentication();// Destructure setAuthenticated from the context
+const navigate = useNavigate();
 
 const handleUsernameChange = (e) => {
 setUsername(e.target.value);
@@ -25,9 +29,12 @@ const handleLogin = (e) => {
         .then((response) => {
             //Authentication successful, store the JWT token in local storage
             localStorage.setItem('jwtToken', response.data);
+            setAuthenticated(true);
+             localStorage.setItem('authenticated', 'true');
+             localStorage.setItem('sessionStart', new Date().getTime());
             console.log("Successfully Logged in");
             //redirect the user to a dummy page for now
-            window.location.href = '/DummyPage';
+            navigate('/DummyPage');
             console.log("Redirected to dummy page");
         })
         .catch((error) => {
