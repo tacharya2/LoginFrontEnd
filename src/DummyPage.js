@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuthentication } from './AuthenticationContext';
-import { Navigate } from 'react-router-dom';
 
 function DummyPage() {
   const { authenticated } = useAuthentication();
 
-  // Redirect to login page if not authenticated
+  useEffect(() => {
+    // Update the session start timestamp when the user interacts with the DummyPage
+    localStorage.setItem('sessionStart', new Date().getTime());
+  }, []);
+
+  // If not authenticated, render nothing (or an appropriate message)
   if (!authenticated) {
-    return <Navigate to="/Login" />;
+    return null;
   }
 
   // Render the DummyPage content for authenticated users
