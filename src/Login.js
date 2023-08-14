@@ -20,12 +20,12 @@ function Login(){
 const handleLogin = (e) => {
     e.preventDefault();
 
-    const dataToSend = {
-    username : username,
-    password : password
-    };
-
-        axios.post('http://localhost:8080/api/user/login', dataToSend) //need to check
+//    const dataToSend = {
+//    username : username,
+//    password : password
+//    };
+         const url = `http://localhost:8080/api/user/login?username=${username}&password=${password}`;
+        axios.post(url) //need to check
         .then((response) => {
             //Authentication successful, store the JWT token in local storage
             localStorage.setItem('jwtToken', response.data);
