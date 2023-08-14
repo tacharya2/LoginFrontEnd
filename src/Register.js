@@ -4,19 +4,65 @@ import { Link } from 'react-router-dom';
 
 function Register(){
 
-const [name, setName] = useState('');
-const [username, setUsername] = useState('');
-const [password, setPassword] = useState('');
-const [message, setMessage] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [middleInitial, setMiddleInitial] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [phone, setPhone] = useState('');
 
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
-    const handleNameChange = (e) => {
-    setName(e.target.value);
+    //Address fields
+      const[street, setStreet] = useState('');
+      const[city, setCity] = useState('');
+      const[state, setState] = useState('');
+      const[zip, setZip] = useState('');
+
+        // Function to reset address fields
+        const resetAddressFields = () => {
+          setStreet('');
+          setCity('');
+          setState('');
+          setZip('');
+        };
+
+    const handleFirstNameChange = (e) => {
+    setFirstName(e.target.value);
+    };
+
+    const handleMiddleInitialChange = (e) => {
+    setMiddleInitial(e.target.value);
+    };
+
+    const handleLastNameChange = (e) => {
+    setLastName(e.target.value);
+    };
+
+    const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
     };
 
     const handleUsernameChange = (e) => {
     setUsername(e.target.value);
     };
+
+          const handleStreetChange = (e) => {
+            setStreet(e.target.value.trim());
+          };
+
+          const handleCityChange = (e) => {
+            setCity(e.target.value.trim());
+          };
+
+
+          const handleStateChange = (e) => {
+            setState(e.target.value.trim());
+          };
+
+          const handleZipChange = (e) => {
+          setZip(e.target.value.trim());
+          };
 
     const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -36,7 +82,16 @@ const [message, setMessage] = useState('');
     // prepare the data to be sent to the server
 
     const dataToSend = {
-    name : name,
+    firstName : firstName,
+    middleInitial : middleInitial,
+    lastName : lastName,
+    phone : phone,
+    address: {
+            street: street,
+            city: city,
+            state: state,
+            zip: zip
+            },
     username : username,
     password : password
     };
@@ -44,9 +99,13 @@ const [message, setMessage] = useState('');
     axios.post('http://localhost:8080/api/user/create', dataToSend)
     .then((response) => {
     console.log(response.data);
-    setMessage(`Hello ${response.data.name}! Thank you for registering with us with a username: ${response.data.username}`);
+    setMessage(`Hello ${response.data.firstName} ${response.data.lastName}! Thank you for registering with us with a username: ${response.data.username}`);
 
-    setName('');
+    setFirstName('');
+    setMiddleInitial('');
+    setLastName('');
+    setPhone('');
+    resetAddressFields();
     setUsername('');
     setPassword('');
 
@@ -62,12 +121,41 @@ const [message, setMessage] = useState('');
           <h2>Registration Form</h2>
           <form onSubmit={handleSubmit}>
               <div className="form-element">
-                  <label>Name </label>
-                  <input required type="Text" placeholder="John Owen" value={name} onChange={handleNameChange}/>
+                  <label>First Name </label>
+                  <input required type="Text" placeholder="John" value={firstName} onChange={handleFirstNameChange}/>
               </div>
               <div className="form-element">
+                  <label>Middle Initial </label>
+                  <input required type="Text" placeholder="B" value={middleInitial} onChange={handleMiddleInitialChange}/>
+              </div>
+              <div className="form-element">
+                  <label>Last Name </label>
+                  <input required type="Text" placeholder="Owen" value={lastName} onChange={handleLastNameChange}/>
+              </div>
+
+              <div className="form-element">
+                  <label> Phone Number </label>
+                  <input required type="text" placeholder="123-456-7890" value={phone} onChange={handlePhoneChange}/>
+              </div>
+            <div className="form-element">
+              <label>Street</label>
+              <input required type="text" placeholder="123 Main Street" value={street} onChange={handleStreetChange} />
+            </div>
+            <div className="form-element">
+              <label>City</label>
+              <input required type="text" placeholder="San Antoine" value={city} onChange={handleCityChange} />
+            </div>
+            <div className="form-element">
+              <label>State</label>
+              <input required type="text" placeholder="TX" value={state} onChange={handleStateChange} />
+            </div>
+            <div className="form-element">
+              <label>Zip</label>
+              <input required type="text" placeholder="30084" value={zip} onChange={handleZipChange} />
+            </div>
+              <div className="form-element">
                   <label> Username </label>
-                  <input required type="text" placeholder="username" value={username} onChange={handleUsernameChange}/>
+                  <input required type="text" placeholder="johnowen" value={username} onChange={handleUsernameChange}/>
               </div>
 
               <div className="form-element">
