@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './App.css';
 
 function Register(){
 
@@ -126,7 +127,7 @@ function Register(){
               </div>
               <div className="form-element">
                   <label>Middle Initial </label>
-                  <input required type="Text" placeholder="B" value={middleInitial} onChange={handleMiddleInitialChange}/>
+                  <input type="Text" placeholder="B" value={middleInitial} onChange={handleMiddleInitialChange}/>
               </div>
               <div className="form-element">
                   <label>Last Name </label>
@@ -154,8 +155,8 @@ function Register(){
               <input required type="text" placeholder="30084" value={zip} onChange={handleZipChange} />
             </div>
               <div className="form-element">
-                  <label> Username </label>
-                  <input required type="text" placeholder="johnowen" value={username} onChange={handleUsernameChange}/>
+                  <label> Email/Username </label>
+                  <input required type="email" placeholder="johnowen@gmail.com" value={username} onChange={handleUsernameChange}/>
               </div>
 
               <div className="form-element">
