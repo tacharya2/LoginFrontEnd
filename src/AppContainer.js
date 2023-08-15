@@ -7,19 +7,22 @@ import Home from './Home';
 import NavigationBar from './NavigationBar';
 import { useAuthentication } from './AuthenticationContext';
 
+
 function AppContainer() {
   const { authenticated } = useAuthentication();
 
   return (
-    <div>
-      <NavigationBar authenticated={authenticated} />
-      <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/DummyPage" element={<DummyPage />} />
-        <Route path="/Home" element={<Home />} />
-      </Routes>
+<div className="appContainers">
+    <NavigationBar className='navigationBar' authenticated={authenticated} />
+    <div className="content">
+        <Routes>
+            <Route className="login" path="/Login" element={<Login />} />
+            <Route className="register" path="/Register" element={<Register />} />
+            <Route className="loggedIn" path="/DummyPage" element={<DummyPage />} />
+            <Route className="home" path="/Home" element={<Home />} />
+        </Routes>
     </div>
+</div>
   );
 }
 

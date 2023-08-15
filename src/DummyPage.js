@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAuthentication } from './AuthenticationContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import './AppContainer.css';
 
 function DummyPage() {
     const { authenticated, setAuthenticated } = useAuthentication();
@@ -24,7 +25,7 @@ function DummyPage() {
 
   // Render the DummyPage content for authenticated users
   return (
-    <div>
+    <div className='home'>
       <h1>Welcome to this Dummy Page</h1>
       {/* Add your content here */}
       <h2>Your future account activity will be accounted here</h2>
