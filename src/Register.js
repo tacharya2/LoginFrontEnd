@@ -99,22 +99,27 @@ function Register(){
     console.log(dataToSend)
     axios.post('http://localhost:8080/api/user/create', dataToSend)
     .then((response) => {
-    console.log(response.data);
-    setMessage(`Hello ${response.data.firstName} ${response.data.lastName}! Thank you for registering with us with a username: ${response.data.username}`);
+        if (Array.isArray(response.data.errors) && response.data.errors.length > 0) {
+        const errorMessages = response.data.errors;
+        setMessage(`Validation errors: ${errorMessages}`);
+        }else{
+        setMessage(response.data.message);
+        }
+        console.log(response.data);
 
-    setFirstName('');
-    setMiddleInitial('');
-    setLastName('');
-    setPhone('');
-    resetAddressFields();
-    setUsername('');
-    setPassword('');
+        setFirstName('');
+        setMiddleInitial('');
+        setLastName('');
+        setPhone('');
+        resetAddressFields();
+        setUsername('');
+        setPassword('');
 
-    })
-    .catch(error =>{
-    console.log('Error: ', error);
-    });
-  };
+        })
+        .catch(error =>{
+        console.log('Error: ', error);
+        });
+    };
 
   return(
       <div className="container">
@@ -161,7 +166,7 @@ function Register(){
 
               <div className="form-element">
                 <label>Password</label>
-                <input required type="password" placeholder="8 characters long" value={password} onChange={handlePasswordChange}/>
+                <input required type="password" placeholder="8-12 alphanumeric(1 uppercase) & a special characters" value={password} onChange={handlePasswordChange}/>
               </div>
 
               <button type="submit" className="submit-button" >Register with Intra Foundation </button>
