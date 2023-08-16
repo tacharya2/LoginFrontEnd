@@ -20,6 +20,9 @@ function Register(){
       const[state, setState] = useState('');
       const[zip, setZip] = useState('');
 
+      //terms and conditions
+      const [isTermsChecked, setIsTermsChecked] = useState('');
+
         // Function to reset address fields
         const resetAddressFields = () => {
           setStreet('');
@@ -28,25 +31,25 @@ function Register(){
           setZip('');
         };
 
-    const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-    };
+            const handleFirstNameChange = (e) => {
+            setFirstName(e.target.value);
+            };
 
-    const handleMiddleInitialChange = (e) => {
-    setMiddleInitial(e.target.value);
-    };
+            const handleMiddleInitialChange = (e) => {
+            setMiddleInitial(e.target.value);
+            };
 
-    const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-    };
+            const handleLastNameChange = (e) => {
+            setLastName(e.target.value);
+            };
 
-    const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-    };
+            const handlePhoneChange = (e) => {
+            setPhone(e.target.value);
+            };
 
-    const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    };
+            const handleUsernameChange = (e) => {
+            setUsername(e.target.value);
+            };
 
           const handleStreetChange = (e) => {
             setStreet(e.target.value.trim());
@@ -65,60 +68,66 @@ function Register(){
           setZip(e.target.value.trim());
           };
 
-    const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    };
+        const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        };
 
-//    const handleRePasswordChange = (e)=>{
-//    setRePassword(e..target.value)
-//    }
+        const handleCheckboxChange = (e)=>{
+        setIsTermsChecked(!isTermsChecked)
+        };
+        const handleTermsPopup = (e) => {
+        e.preventDefault();
+        window.open('/terms-and-conditions', '_blank', 'width=600,height=400');
+        }
 
     const handleSubmit = (e) => {
     e.preventDefault();
 
+
     if(password === null){
     alert("Password required")
-    }
-
-    // prepare the data to be sent to the server
-
-    const dataToSend = {
-    firstName : firstName,
-    middleInitial : middleInitial,
-    lastName : lastName,
-    phone : phone,
-    address: {
-            street: street,
-            city: city,
-            state: state,
-            zip: zip
-            },
-    username : username,
-    password : password
     };
-    console.log(dataToSend)
-    axios.post('http://localhost:8080/api/user/create', dataToSend)
-    .then((response) => {
-        if (Array.isArray(response.data.errors) && response.data.errors.length > 0) {
-        const errorMessages = response.data.errors;
-        setMessage(`Validation errors: ${errorMessages}`);
-        }else{
-        setMessage(response.data.message);
+    if(isTermsChecked){
+        // prepare the data to be sent to the server
+
+        const dataToSend = {
+        firstName : firstName,
+        middleInitial : middleInitial,
+        lastName : lastName,
+        phone : phone,
+        address: {
+                street: street,
+                city: city,
+                state: state,
+                zip: zip
+                },
+        username : username,
+        password : password
+        };
+        console.log(dataToSend)
+        axios.post('http://localhost:8080/api/user/create', dataToSend)
+        .then((response) => {
+            if (Array.isArray(response.data.errors) && response.data.errors.length > 0) {
+            const errorMessages = response.data.errors;
+            setMessage(`Validation errors: ${errorMessages}`);
+            }else{
+            setMessage(response.data.message);
+            }
+            console.log(response.data);
+
+            setFirstName('');
+            setMiddleInitial('');
+            setLastName('');
+            setPhone('');
+            resetAddressFields();
+            setUsername('');
+            setPassword('');
+
+            })
+            .catch(error =>{
+            console.log('Error: ', error);
+            });
         }
-        console.log(response.data);
-
-        setFirstName('');
-        setMiddleInitial('');
-        setLastName('');
-        setPhone('');
-        resetAddressFields();
-        setUsername('');
-        setPassword('');
-
-        })
-        .catch(error =>{
-        console.log('Error: ', error);
-        });
     };
 
   return(
@@ -168,8 +177,14 @@ function Register(){
                 <label>Password</label>
                 <input required type="password" placeholder="8-12 alphanumeric(1 uppercase) & a special characters" value={password} onChange={handlePasswordChange}/>
               </div>
+              <div className="form-element">
+                <label>
+                <input required type="checkbox"  checked = {isTermsChecked} onChange={handleCheckboxChange} />
+                I agree to the <Link to="/terms-and-conditions" target="_blank" onClick={handleTermsPopup}>Terms and Conditions</Link>
+                </label>
+              </div>
 
-              <button type="submit" className="submit-button" >Register with Intra Foundation </button>
+              <button type="submit" className="submit-button" disabled={!isTermsChecked} >Register with Intra Foundation </button>
               <p className="message">{message}</p>
               <p className="log-in">Please <Link to="/Login">Login</Link> to access you account</p>
           </form>
