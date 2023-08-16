@@ -78,6 +78,16 @@ function Register(){
         const handleTermsPopup = (e) => {
         e.preventDefault();
         window.open('/terms-and-conditions', '_blank', 'width=600,height=400');
+        };
+
+        const handleResetFormFields = () => {
+            setFirstName('');
+            setMiddleInitial('');
+            setLastName('');
+            setPhone('');
+            resetAddressFields();
+            setUsername('');
+            setPassword('');
         }
 
     const handleSubmit = (e) => {
@@ -183,7 +193,7 @@ function Register(){
                 I agree to the <Link to="/terms-and-conditions" target="_blank" onClick={handleTermsPopup}>Terms and Conditions</Link>
                 </label>
               </div>
-
+              <button type="reset" className="reset" onClick={handleResetFormFields} >Reset Form </button>
               <button type="submit" className="submit-button" disabled={!isTermsChecked} >Register with Intra Foundation </button>
               <p className="message">{message}</p>
               <p className="log-in">Please <Link to="/Login">Login</Link> to access you account</p>
