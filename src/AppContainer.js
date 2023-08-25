@@ -7,6 +7,7 @@ import Home from './Home';
 import Terms from './Terms';
 import NavigationBar from './NavigationBar';
 import { useAuthentication } from './AuthenticationContext';
+import PwResetRequest from './PwResetRequest';
 
 
 function AppContainer() {
@@ -22,6 +23,7 @@ function AppContainer() {
             <Route className="loggedIn" path="/DummyPage" element={<DummyPage />} />
             <Route className="home" path="/Home" element={<Home />} />
             <Route className="home" path="/terms-and-conditions" element={<Terms />} />
+//            <Route className="home" path="/PwResetRequest" element={<PwResetRequest />} />
         </Routes>
     </div>
 </div>
