@@ -61,15 +61,25 @@ function PwResetRequest() {
         <div className='form-wrapper'>
           <h2>Password Reset</h2>
           <form onSubmit={handleResetPassword}>
+          <div className='form-element'>
             <label>
               New Password:
-              <input type="password" required value={newPassword} onChange={handleNewPasswordChange} />
+              <input type={showPassword ? 'text' : 'password'} required value={newPassword} onChange={handleNewPasswordChange} />
             </label>
+            </div>
             <br />
+            <div className='form-element'>
             <label>
               Reenter New Password:
-              <input type="password" required value={reenterNewPassword} onChange={handleReenterNewPasswordChange} />
+              <input type={showPassword ? 'text' : 'password'} required value={reenterNewPassword} onChange={handleReenterNewPasswordChange} />
             </label>
+            </div>
+
+              <label>
+                Show Password:
+                <input type="checkbox" checked={showPassword} onChange={() => setShowPassword(!showPassword)}/>
+              </label>
+
             <br />
             <button type="reset" className="reset" onClick={handleResetFormFields} >Reset Form </button>
             <button type="submit" className='submit-button'>Reset Password</button>
