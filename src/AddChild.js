@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import axios from 'axios';
 import './App.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const ChildForm = ({ onChildAdded, userId }) => {
   const [childInfo, setChildInfo] = useState({
@@ -13,17 +16,28 @@ const ChildForm = ({ onChildAdded, userId }) => {
     driverRelation: '',
     category:'',
     shift: '',
+    date: new Date().toISOString().slice(0, 10),
     // Add more fields as needed
   });
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setChildInfo((prevInfo) => ({
-      ...prevInfo,
-      [name]: value,
-    }));
-  };
+        const handleInputChange = (event) => {
+          const { name, value } = event.target;
+
+          // Handle special case for the date field
+          if (name === 'date') {
+            const formattedDate = value ? moment(value).format('MM/DD/YYYY') : '';
+            setChildInfo((prevInfo) => ({
+              ...prevInfo,
+              [name]: formattedDate,
+            }));
+          } else {
+            setChildInfo((prevInfo) => ({
+              ...prevInfo,
+              [name]: value,
+            }));
+          }
+        };
 
     const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,11 +49,6 @@ const ChildForm = ({ onChildAdded, userId }) => {
     await axios
             .post(url, childInfo)
         onChildAdded(childInfo);
-
-
-
-
-
         setSubmitStatus("Success!");
         setTimeout(() => {
         setSubmitStatus(null);
@@ -59,24 +68,32 @@ const ChildForm = ({ onChildAdded, userId }) => {
           driverRelation: '',
           category:'',
           shift: '',
+          date: new Date().toISOString().slice(0, 10),
       };
     const handleResetFormFields = () => {
       setChildInfo(initialFormState);
     };
+        const handleDateChange = (name, date) => {
+          const formattedDate = date ? moment(date).format('MM/DD/YYYY') : '';
+          setChildInfo((prevInfo) => ({
+            ...prevInfo,
+            [name]: formattedDate,
+          }));
+        };
   return (
      <div className="container">
       <div className="form-wrapper">
-      <h3>Add Child</h3>
+      <h3>Add a Child</h3>
       <form onSubmit={handleSubmit}>
            <div className='form-element'>
             <label> Full Name:
-              <input type="text" name="fullName" value={childInfo.fullName} onChange={handleInputChange}/>
+              <input required type="text" name="fullName" placeholder="Prinsa Sharma" value={childInfo.fullName} onChange={handleInputChange}/>
             </label>
             </div>
             <br />
            <div className='form-element'>
           <label> Gender:
-            <select name="gender" value={childInfo.gender} onChange={handleInputChange}>
+            <select required name="gender" value={childInfo.gender} onChange={handleInputChange}>
               <option value="">Select Gender</option>
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
@@ -92,59 +109,72 @@ const ChildForm = ({ onChildAdded, userId }) => {
             </label>
            </div>
             <br />
-          <div className='form-element'>
-            <label> Emergency Contact Person Full Name:
-              <input type="text"name="emName" value={childInfo.emName} onChange={handleInputChange}/>
-            </label>
-           </div>
-            <br />
-          <div className='form-element'>
-            <label> Emergency Contact Person Phone Number:
-              <input type="text"name="emPhone" value={childInfo.emPhone} onChange={handleInputChange}/>
-            </label>
+              <div className='form-element'>
+                <label> Emergency Contact Person Full Name:
+                  <input required type="text"name="emName"placeholder="Heema Sharma" value={childInfo.emName} onChange={handleInputChange}/>
+                </label>
+               </div>
+                <br />
+              <div className='form-element'>
+                <label> Emergency Contact Person Phone Number:
+                  <input required type="text"name="emPhone" value={childInfo.emPhone} onChange={handleInputChange}/>
+                </label>
+              </div>
+                <br />
+              <div className='form-element'>
+                <label> Name of the Driver | Carpool Driver:
+                  <input required type="text"name="driver" placeholder="Puspa Sharma" value={childInfo.driver} onChange={handleInputChange}/>
+                </label>
+              </div>
+                <br />
+              <div className='form-element'>
+             <label> Driver Relationship:
+            <select required name="driverRelation" value={childInfo.driverRelation} onChange={handleInputChange}>
+              <option value="">Select Relationship</option>
+              <option value="FATHER">Father</option>
+              <option value="MOTHER">Mother</option>
+              <option value="UNCLE">Uncle</option>
+              <option value="AUNT">Aunt</option>
+              <option value="FRIEND_TO_PARENT">Friend to Parent</option>
+              <option value="LEGAL_GUARDIAN">Legal Guardian</option>
+            </select>
+          </label>
           </div>
             <br />
-          <div className='form-element'>
-            <label> Name of the Driver | Carpool Driver:
-              <input type="text"name="driver" value={childInfo.driver} onChange={handleInputChange}/>
-            </label>
-          </div>
-            <br />
-          <div className='form-element'>
-         <label> Driver Relationship:
-        <select name="driverRelation" value={childInfo.driverRelation} onChange={handleInputChange}>
-          <option value="">Select Relationship</option>
-          <option value="FATHER">Father</option>
-          <option value="MOTHER">Mother</option>
-          <option value="UNCLE">Uncle</option>
-          <option value="AUNT">Aunt</option>
-          <option value="FRIEND_TO_PARENT">Friend to Parent</option>
-          <option value="LEGAL_GUARDIAN">Legal Guardian</option>
-        </select>
-      </label>
-      </div>
+           <div className='form-element'>
+          <label> Category:
+            <select required name="category" value={childInfo.category} onChange={handleInputChange}>
+              <option value="">Select Category</option>
+              <option value="DANCE">Dancing</option>
+              <option value="SING">Singing</option>
+            </select>
+          </label>
+        </div>
         <br />
-       <div className='form-element'>
-      <label> Category:
-        <select name="category" value={childInfo.category} onChange={handleInputChange}>
-          <option value="">Select Category</option>
-          <option value="DANCE">Dancing</option>
-          <option value="SING">Singing</option>
-        </select>
-      </label>
-    </div>
-        <br />
-      <div className='form-element'>
-      <label> Shift:
-        <select name="shift" value={childInfo.shift} onChange={handleInputChange}>
-          <option value="">Select Shift</option>
-          <option value="FIRST">First</option>
-          <option value="SECOND">Second</option>
-          <option value="THIRD">Third</option>
-        </select>
-      </label>
-     </div>
+          <div className='form-element'>
+          <label> Shift:
+            <select name="shift" value={childInfo.shift} onChange={handleInputChange}>
+              <option value="">Select Shift</option>
+              <option value="FIRST">First</option>
+              <option value="SECOND">Second</option>
+              <option value="THIRD">Third</option>
+            </select>
+          </label>
+         </div>
       <br />
+          <div className='form-element'>
+            <label htmlFor="dateField">Today's Date:</label>
+            <DatePicker
+              id="dateField"
+              selected={childInfo.date ? new Date(childInfo.date) : null}
+              onChange={(date) => handleDateChange('date', date)}
+              dateFormat="MM/dd/yyyy"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+            />
+          </div>
+           <br />
         <button type="reset" className="reset" onClick={handleResetFormFields} >Reset Form </button>
         <button className="submit-button" type="submit">Add Child</button>
 
