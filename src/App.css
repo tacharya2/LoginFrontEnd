@@ -75,4 +75,18 @@ input {
     transition: background-color 0.3s;
 }
 
+.forgot-link {
+  margin: 10px 0; /* Optional: Add some spacing between the links */
+  cursor: pointer;
+}
+
+.forgot-link u {
+  text-decoration: none; /* Remove default underline from <u> tag */
+  font-weight: bold; /* Make the text bold */
+}
+
+.forgot-link:hover {
+  cursor: pointer; /* Change cursor to hand tool on hover */
+  color: green;
+}
 

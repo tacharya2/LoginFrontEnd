@@ -73,8 +73,8 @@ const handleLogin = (e) => {
                     <button type="submit" className="submit-button"> Login</button>
                     <p className="error-message">{errorMessage}</p>
                     <div className="forgot-links">
-                        <p className="forgot-link" onClick={handleForgotUsername} >Forgot Username</p>
-                        <p className="forgot-link" onClick={handleForgotPassword}>Forgot Password</p>
+                        <p className="forgot-link" onClick={handleForgotUsername}> <u>Forgot Username</u></p>
+                        <p className="forgot-link" onClick={handleForgotPassword}><u>Forgot Password</u></p>
                     </div>
                     {resettingPassword && ( <ForgotPassword onClose={() => setResettingPassword(false)} // Close the modal
                     setButtonClicked={setResettingPassword} // Update the resettingPassword state
