@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import InputMask from 'react-input-mask'
 import axios from 'axios';
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -39,6 +40,23 @@ const ChildForm = ({ onChildAdded, userId }) => {
           }
         };
 
+      const handleInputChange2 = (event) => {
+        const { name, value } = event.target;
+
+        // Handle special case for the phone number field
+        if (name === 'emPhone') {
+          const formattedPhoneNumber = value.replace(/[^\d]/g, ''); // Remove non-digit characters
+          setChildInfo((prevInfo) => ({
+            ...prevInfo,
+            [name]: formattedPhoneNumber,
+          }));
+        } else {
+          setChildInfo((prevInfo) => ({
+            ...prevInfo,
+            [name]: value,
+          }));
+        }
+      };
     const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -124,9 +142,15 @@ const ChildForm = ({ onChildAdded, userId }) => {
                </div>
                 <br />
               <div className='form-element'>
-                <label> Emergency Contact Person Phone Number:
-                  <input required type="text"name="emPhone" value={childInfo.emPhone} onChange={handleInputChange}/>
-                </label>
+              <label> Emergency Contact Person Phone Number:
+                <InputMask
+                  mask="999-999-9999" // Use the mask pattern for the desired format
+                  placeholder="123-456-7890"
+                  name="emPhone"
+                  value={childInfo.emPhone}
+                  onChange={handleInputChange2}
+                />
+              </label>
               </div>
                 <br />
               <div className='form-element'>
