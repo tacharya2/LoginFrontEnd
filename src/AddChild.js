@@ -16,7 +16,7 @@ const ChildForm = ({ onChildAdded, userId }) => {
     driverRelation: '',
     category:'',
     shift: '',
-    date: new Date().toISOString().slice(0, 10),
+    date: moment().format('MM/DD/YYYY'),
     // Add more fields as needed
   });
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -68,7 +68,7 @@ const ChildForm = ({ onChildAdded, userId }) => {
           driverRelation: '',
           category:'',
           shift: '',
-          date: new Date().toISOString().slice(0, 10),
+          date: moment().format('MM/DD/YYYY'),
       };
     const handleResetFormFields = () => {
       setChildInfo(initialFormState);
@@ -104,9 +104,17 @@ const ChildForm = ({ onChildAdded, userId }) => {
           </div>
           <br />
           <div className='form-element'>
-            <label> Date Of Birth:
-              <input type="text"name="dob" value={childInfo.dob} onChange={handleInputChange}/>
-            </label>
+           <label> Date Of Birth:
+             <DatePicker
+               id="dobField"
+               selected={childInfo.dob ? moment(childInfo.dob, 'MM/DD/YYYY').toDate() : null}
+               onChange={(date) => handleDateChange('dob', date)}
+               dateFormat="MM/dd/yyyy"
+               showMonthDropdown
+               showYearDropdown
+               dropdownMode="select"
+             />
+   </label>
            </div>
             <br />
               <div className='form-element'>
