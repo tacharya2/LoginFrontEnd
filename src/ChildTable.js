@@ -5,8 +5,8 @@ const ChildTable = ({ children }) => {
 if (!children || children.length === 0) {
     return <p>No children data available.</p>;
     }
-console.log("Number of children:", children.length);
-console.log("Type of children:", typeof children);
+//console.log("Number of children:", children.length);
+//console.log("Type of children:", typeof children);
   return (
   <div className="child-table-wrapper">
         <table className="child-table">

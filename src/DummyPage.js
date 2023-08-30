@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { useAuthentication } from './AuthenticationContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 import ChildForm from './AddChild';
-//import './AppContainer.css';
+import ParentInfo from './ParentInfo'
 
 function DummyPage() {
     const { authenticated, setAuthenticated } = useAuthentication();
@@ -59,7 +59,8 @@ const userId = decodedToken.userId;
       <h2>Please register your child</h2>
       <p>A family can register maximum of 3 child</p>
       <ChildForm onChildAdded={handleChildAdded} userId={userId} />
-      <button onClick={handleLogout}>Logout</button> {/* Logout button */}
+      <ParentInfo userId={userId} onLogout={handleLogout}/>
+      {/*<button onClick={handleLogout}>Logout</button> {/* Logout button */}
     </div>
   );
 }
