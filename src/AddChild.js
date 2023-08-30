@@ -141,7 +141,7 @@ console.log("userId for API call:", userId);
       <h3>Add a Child</h3>
       <form onSubmit={handleSubmit}>
            <div className='form-element'>
-            <label> Full Name:
+            <label> Child's Full Name:
               <input required type="text" name="fullName" placeholder="Prinsa Sharma" value={childInfo.fullName} onChange={handleInputChange}/>
             </label>
             </div>

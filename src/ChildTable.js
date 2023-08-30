@@ -14,6 +14,8 @@ console.log("Type of children:", typeof children);
             <tr>
                <th>S.N</th>
               <th>Child Name</th>
+              <th>Age</th>
+              <th>Shift</th>
               <th>Gender</th>
               <th>Emergency Name</th>
               <th>Emergency Number</th>
@@ -21,6 +23,7 @@ console.log("Type of children:", typeof children);
               <th>Driver Relation</th>
               <th>Category</th>
               <th>Registered</th>
+
               {/* Add more headers as needed */}
             </tr>
           </thead>
@@ -29,6 +32,8 @@ console.log("Type of children:", typeof children);
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{child.fullName}</td>
+                <td>{child.age}</td>
+                <td>{child.shift}</td>
                 <td>{child.gender}</td>
                 <td>{child.emName}</td>
                 <td>{child.emPhone}</td>
@@ -36,6 +41,7 @@ console.log("Type of children:", typeof children);
                 <td>{child.driverRelation}</td>
                 <td>{child.category}</td>
                 <td>{child.date}</td>
+
                 {/* Add more cells as needed */}
               </tr>
             ))}
