@@ -87,7 +87,7 @@ const ChildForm = ({ onChildAdded, userId }) => {
         setTimeout(() => {
         setSubmitStatus(null);
         handleResetFormFields();
-      }, 7000); //Success! is displayed for 5 sec
+      }, 7000); //Success! is displayed for 7 sec
     }catch(error){
     console.error("Error submitting child data", error);
     setSubmitStatus('error')
@@ -258,7 +258,7 @@ console.log("userId for API call:", userId);
         <p style={{ color: 'blue' }}>Submitting.....</p>
       )}
       </div>
-      <div className="child-table-wrapper">
+      <div className="child-table-container">
         <ChildTable children={childrenData} />
       </div>
     </div>
