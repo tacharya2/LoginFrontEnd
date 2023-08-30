@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import InputMask from 'react-input-mask'
 import axios from 'axios';
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import ChildTable from './ChildTable';
+
 
 const ChildForm = ({ onChildAdded, userId }) => {
   const [childInfo, setChildInfo] = useState({
@@ -21,6 +23,7 @@ const ChildForm = ({ onChildAdded, userId }) => {
     // Add more fields as needed
   });
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [childrenData, setChildrenData] = useState([]);
 
         const handleInputChange = (event) => {
           const { name, value } = event.target;
@@ -40,23 +43,32 @@ const ChildForm = ({ onChildAdded, userId }) => {
           }
         };
 
-      const handleInputChange2 = (event) => {
-        const { name, value } = event.target;
+        const handleInputChange2 = (event) => {
+          const { name, value } = event.target;
 
-        // Handle special case for the phone number field
-        if (name === 'emPhone') {
-          const formattedPhoneNumber = value.replace(/[^\d]/g, ''); // Remove non-digit characters
-          setChildInfo((prevInfo) => ({
-            ...prevInfo,
-            [name]: formattedPhoneNumber,
-          }));
-        } else {
-          setChildInfo((prevInfo) => ({
-            ...prevInfo,
-            [name]: value,
-          }));
-        }
-      };
+          // Handle special case for the phone number field
+          if (name === 'emPhone') {
+            const formattedPhoneNumber = value.replace(/[^\d]/g, ''); // Remove non-digit characters
+            if (formattedPhoneNumber.length === 10) {
+              const phoneNumberWithHyphens = `${formattedPhoneNumber.slice(0, 3)}-${formattedPhoneNumber.slice(3, 6)}-${formattedPhoneNumber.slice(6)}`;
+              setChildInfo((prevInfo) => ({
+                ...prevInfo,
+                [name]: phoneNumberWithHyphens,
+              }));
+            } else {
+              setChildInfo((prevInfo) => ({
+                ...prevInfo,
+                [name]: formattedPhoneNumber,
+              }));
+            }
+          } else {
+            setChildInfo((prevInfo) => ({
+              ...prevInfo,
+              [name]: value,
+            }));
+          }
+        };
+
     const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -64,13 +76,18 @@ const ChildForm = ({ onChildAdded, userId }) => {
     const url = `http://localhost:8080/api/users/${userId}/children`;
     try{
     setSubmitStatus('submitting...');
+            setTimeout(() => {
+            setSubmitStatus(null);
+            handleResetFormFields();
+          }, 7000);
     await axios
             .post(url, childInfo)
         onChildAdded(childInfo);
-        setSubmitStatus("Success!");
+        setSubmitStatus("success");
         setTimeout(() => {
         setSubmitStatus(null);
-      }, 5000); //Success! is displayed for 5 sec
+        handleResetFormFields();
+      }, 7000); //Success! is displayed for 5 sec
     }catch(error){
     console.error("Error submitting child data", error);
     setSubmitStatus('error')
@@ -98,6 +115,26 @@ const ChildForm = ({ onChildAdded, userId }) => {
             [name]: formattedDate,
           }));
         };
+useEffect(() => {
+console.log("userId for API call:", userId);
+
+  const fetchChildrenData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/children/${userId}/myChild`);
+      console.log('API Response:', response);
+      const parsedData = response.data;
+      console.log('Response data:', parsedData);
+      setChildrenData(parsedData);
+
+    } catch (error) {
+      console.error('Error fetching children data', error);
+    }
+
+  };
+
+  fetchChildrenData();
+}, [userId]);
+
   return (
      <div className="container">
       <div className="form-wrapper">
@@ -212,11 +249,17 @@ const ChildForm = ({ onChildAdded, userId }) => {
 
       </form>
       {submitStatus === 'success' && (
-        <p style={{ color: 'green' }}>Child added successfully!</p>
+        <p style={{ color: 'green' }}>Child added successfully! Please Refresh the page to display at the right panel</p>
       )}
       {submitStatus === 'error' && (
         <p style={{ color: 'red' }}>An error occurred. Please try again.</p>
       )}
+      {submitStatus === 'submitting...' && (
+        <p style={{ color: 'blue' }}>Submitting.....</p>
+      )}
+      </div>
+      <div className="child-table-wrapper">
+        <ChildTable children={childrenData} />
       </div>
     </div>
   );
