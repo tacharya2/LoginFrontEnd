@@ -187,6 +187,17 @@ function Register(){
                 <label>Password</label>
                 <input required type="password" placeholder="8-12 alphanumeric(1 uppercase) & a special characters" value={password} onChange={handlePasswordChange}/>
               </div>
+                <div>
+                <p>Password Requirement</p>
+                <ul>
+                  <li>A minimum of 8 characters</li>
+                  <li>An alphabetic character</li>
+                  <li>A special character</li>
+                  <li>A numeric character</li>
+                  <li>A lowercase character</li>
+                  <li>An uppercase character</li>
+                </ul>
+                </div>
               <div className="form-element">
                 <label>
                 <input required type="checkbox"  checked = {isTermsChecked} onChange={handleCheckboxChange} />
@@ -198,6 +209,7 @@ function Register(){
               <p className="message">{message}</p>
               <p className="log-in">Please <Link to="/Login">Login</Link> to access you account</p>
           </form>
+
           </div>
       </div>
   );
