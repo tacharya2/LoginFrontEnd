@@ -18,7 +18,6 @@ const ChildForm = ({ onChildAdded, userId }) => {
     driver: '',
     driverRelation: '',
     category:'',
-    shift: '',
     date: moment().format('MM/DD/YYYY'),
     // Add more fields as needed
   });
@@ -103,7 +102,6 @@ const ChildForm = ({ onChildAdded, userId }) => {
           driver: '',
           driverRelation: '',
           category:'',
-          shift: '',
           date: moment().format('MM/DD/YYYY'),
       };
     const handleResetFormFields = () => {
@@ -220,18 +218,6 @@ console.log("userId for API call:", userId);
             </select>
           </label>
         </div>
-        <br />
-          <div className='form-element'>
-          <label> Shift:
-            <select name="shift" value={childInfo.shift} onChange={handleInputChange}>
-              <option value="">Select Shift</option>
-              <option value="FIRST">First</option>
-              <option value="SECOND">Second</option>
-              <option value="THIRD">Third</option>
-              <option value="UNFIT">Unknown</option>
-            </select>
-          </label>
-         </div>
       <br />
           <div className='form-element'>
             <label htmlFor="dateField">Today's Date:</label>
