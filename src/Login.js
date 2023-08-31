@@ -71,6 +71,17 @@ const handleLogin = (e) => {
                         <input required type="password" placeholder="Password" value={password} onChange={handlePasswordChange} disabled={resettingPassword}/>
                     </div>
                     <button type="submit" className="submit-button"> Login</button>
+                       <div>
+                        <p>Password Requirement</p>
+                        <ul>
+                           <li>A minimum of 8 characters</li>
+                          <li>An alphabetic character</li>
+                          <li>A special character</li>
+                          <li>A numeric character</li>
+                          <li>A lowercase character</li>
+                          <li>An uppercase character</li>
+                        </ul>
+                        </div>
                     <p className="error-message">{errorMessage}</p>
                     <div className="forgot-links">
                         <p className="forgot-link" onClick={handleForgotUsername}> <u>Forgot Username</u></p>
