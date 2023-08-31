@@ -21,11 +21,10 @@ function ParentInfo({userId, onLogout}){
 <div className="user-info-container">
   <h3>User/Parent</h3>
   <div>
-    <p style={{ color: 'purple' }}>Only you can view this</p>
     <p>{userInfo.firstName} {userInfo.lastName}</p>
     <p>{userInfo.phone}</p>
     {userInfo.address && <p>Location: {userInfo.address.zip}</p>}
-    <button onClick={onLogout}>Logout</button>
+    <button  className="refresh-button" onClick={onLogout}>Logout</button>
     {/* Add more fields as needed */}
   </div>
 </div>

@@ -1,45 +1,107 @@
 
-/* styles.css */
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
+    border: 1px solid purple;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+    padding: 15px;
+    margin-top: -5px;
+
+}
+.user-info-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  border: 1px solid purple;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+  }
+.form-wrapper {
+  position: absolute;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+    width: 300px;
+    border: 1px solid purple;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    margin-top: -280px;
 }
 
-.form-wrapper {
+.child-table-container {
+  position: absolute;
+  top: 237px;
+  right:20px;
+  border: 1px solid purple;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+  color: #836953;
+}
+.submit-button {
+    background-color: #765341;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #6a4a3a;
+}
+.reset {
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.reset:hover {
+    background-color: 	#5A5A5A;
+}
+  .refresh-button {
+    background-color: #765341;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 15px;
+    transition: background-color 0.3s;
+  }
+  .refresh-button:hover {
+    background-color: #6a4a3a;
+  }
+  .hidden-form {
+    position: absolute;
+    top: -500px; /* Set the initial position to be above the visible area */
+    left: 0;
+    width: 100%;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 400px;
-}
-
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.form-element {
-    margin-bottom: 15px;
-}
-
-label {
-    font-weight: bold;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.submit-button {
-    background-color: #007bff;
+    transition: top 0.5s ease-in-out; /* Add smooth transition */
+  }
+  .toggle-form-button {
+    position: relative
+    ;
+    top: -480px;
+    right: 10px;
+    background-color:  #765341;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -47,10 +109,34 @@ input {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
+  }
+
+  .toggle-form-button:hover {
+    background-color: #6a4a3a;
+  }
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 4px;
+    color: #333;
 }
 
-.submit-button:hover {
-    background-color: #0056b3;
+.form-element {
+    margin-bottom: 5px;
+    text-align : left;
+}
+
+label {
+    font-weight: italic;
+    color: #836953;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 12px;
 }
 
 .message {
@@ -63,16 +149,6 @@ input {
     font-size: 14px;
     margin-top: 10px;
     text-align: center;
-}
-.reset {
-    background-color: grey;
-    color: white;
-    border: green;
-    padding: 10px 20px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
 }
 
 .forgot-link {
@@ -90,27 +166,4 @@ input {
   color: green;
 }
 
-.user-info-container {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 10px;
-  border: 1px solid purple;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-  }
-/*.child-table-container {
-  position: absolute;
-  top: 300px;
-  right: 20px;
-  border: 1px solid purple;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-}*/
-.child-table-container {
-  margin-top: 20px; /* Adjust the margin as needed */
-  border: 1px solid purple;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-  }
+
