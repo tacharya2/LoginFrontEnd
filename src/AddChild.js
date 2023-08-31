@@ -24,6 +24,7 @@ const ChildForm = ({ onChildAdded, userId }) => {
   });
   const [submitStatus, setSubmitStatus] = useState(null);
   const [childrenData, setChildrenData] = useState([]);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
         const handleInputChange = (event) => {
           const { name, value } = event.target;
@@ -137,7 +138,7 @@ console.log("userId for API call:", userId);
 
   return (
      <div className="container">
-      <div className="form-wrapper">
+      <div className={`form-wrapper ${isFormVisible ? '' : 'hidden-form'}`}>
       <h3>Add a Child</h3>
       <form onSubmit={handleSubmit}>
            <div className='form-element'>
@@ -153,7 +154,7 @@ console.log("userId for API call:", userId);
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
               <option value="NON-BINARY">Unknown</option>
-              <option value="PREFER_NOT_TO_SAY">Prefer Not to Say</option>
+              <option value="UNKNOWN">Prefer Not to Say</option>
             </select>
           </label>
           </div>
@@ -204,8 +205,8 @@ console.log("userId for API call:", userId);
               <option value="MOTHER">Mother</option>
               <option value="UNCLE">Uncle</option>
               <option value="AUNT">Aunt</option>
-              <option value="FRIEND_TO_PARENT">Friend to Parent</option>
-              <option value="LEGAL_GUARDIAN">Legal Guardian</option>
+              <option value="FRIEND">Friend to Parent</option>
+              <option value="GUARDIAN">Legal Guardian</option>
             </select>
           </label>
           </div>
@@ -227,6 +228,7 @@ console.log("userId for API call:", userId);
               <option value="FIRST">First</option>
               <option value="SECOND">Second</option>
               <option value="THIRD">Third</option>
+              <option value="UNFIT">Unknown</option>
             </select>
           </label>
          </div>
@@ -258,6 +260,12 @@ console.log("userId for API call:", userId);
         <p style={{ color: 'blue' }}>Submitting.....</p>
       )}
       </div>
+        <button
+          className="toggle-form-button"
+          onClick={() => setIsFormVisible(!isFormVisible)}
+        >
+          Toggle Form
+        </button>
       <div className="child-table-container">
         <ChildTable children={childrenData} />
       </div>

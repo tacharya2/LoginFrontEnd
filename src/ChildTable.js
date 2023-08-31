@@ -1,10 +1,15 @@
-import React from 'react';
 import './ChildTable.css';
 
+
 const ChildTable = ({ children }) => {
+
 if (!children || children.length === 0) {
     return <p>No children data available.</p>;
     }
+    const handleRefresh = () => {
+      window.location.reload();
+    };
+
 //console.log("Number of children:", children.length);
 //console.log("Type of children:", typeof children);
   return (
@@ -41,12 +46,12 @@ if (!children || children.length === 0) {
                 <td>{child.driverRelation}</td>
                 <td>{child.category}</td>
                 <td>{child.date}</td>
-
                 {/* Add more cells as needed */}
               </tr>
             ))}
           </tbody>
         </table>
+        <button className="refresh-button" onClick={handleRefresh}>Reload</button>
     </div>
   );
 };
