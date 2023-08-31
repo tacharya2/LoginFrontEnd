@@ -194,7 +194,7 @@ function Register(){
                 </label>
               </div>
               <button type="reset" className="reset" onClick={handleResetFormFields} >Reset Form </button>
-              <button type="submit" className="submit-button" disabled={!isTermsChecked} >Register with Intra Foundation </button>
+              <button type="submit" className="submit-button" disabled={!isTermsChecked} >Register </button>
               <p className="message">{message}</p>
               <p className="log-in">Please <Link to="/Login">Login</Link> to access you account</p>
           </form>
