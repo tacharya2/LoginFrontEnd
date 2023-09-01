@@ -14,9 +14,11 @@ function NavigationBar() {
         <li>
           <Link to="/Login">Login</Link>
         </li>
+        <li>
+          <Link to="/AddMessage">Messages</Link>
+        </li>
       </ul>
     </nav>
   );
 }
-
 export default NavigationBar;
