@@ -170,3 +170,26 @@ input {
 text-align: center;
 color:#836953;
 }
+
+.character-count {
+  color: #888;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.messages {
+  font-size: 14px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.success {
+  background-color: green;
+  color: white;
+}
+
+.error {
+  background-color: red;
+  color: white;
+}
