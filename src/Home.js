@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './AppContainer.css';
 import MessageForm from './MessageForm';
+import AlertId from './AlertId';
 
 function Home() {
 
@@ -13,6 +14,7 @@ function Home() {
             {/* Add your content here */}
             <p>We are growing this page. Please visit it later </p>
             <p className="log-in">Please <Link to="/Login">click here</Link> to log into your account</p>
+             <AlertId/>
         </div>
     );
 }
