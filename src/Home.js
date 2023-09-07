@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import './AppContainer.css';
 import MessageForm from './MessageForm';
 import AlertId from './AlertId';
+import EmergencyId from './EmergencyId';
+import InfoId from './InfoId';
+import NewsFeedId from './NewsFeedId';
+import AnnouncementId from './AnnouncementId';
 
 function Home() {
 
@@ -15,6 +19,10 @@ function Home() {
             <p>We are growing this page. Please visit it later </p>
             <p className="log-in">Please <Link to="/Login">click here</Link> to log into your account</p>
              <AlertId/>
+             <EmergencyId/>
+             <InfoId/>
+             <NewsFeedId/>
+             <AnnouncementId/>
         </div>
     );
 }
