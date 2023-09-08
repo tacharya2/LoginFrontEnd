@@ -23,7 +23,7 @@ const apiUrl =  `http://localhost:8080/api/emergency/${emergencyId}/info`;
         }
     }
     return (
-      <div className="user-info-container">
+      <div className="user-emergency-container">
         <h3>Emergencies</h3>
         <div>
           {emergencyContent !== null ? (
