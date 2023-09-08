@@ -23,7 +23,7 @@ const apiUrl =  `http://localhost:8080/api/announcement/${announcementId}/info`;
         }
     }
     return (
-      <div className="user-info-container">
+      <div className="user-announcement-container">
         <h3>Announcements</h3>
         <div>
           {announcementContent !== null ? (

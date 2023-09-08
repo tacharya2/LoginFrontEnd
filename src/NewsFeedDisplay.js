@@ -23,7 +23,7 @@ const apiUrl =  `http://localhost:8080/api/newsFeed/${newsFeedId}/info`;
         }
     }
     return (
-      <div className="user-info-container">
+      <div className="user-news-container">
         <h3>NewsFeed</h3>
         <div>
           {newsFeedContent !== null ? (
