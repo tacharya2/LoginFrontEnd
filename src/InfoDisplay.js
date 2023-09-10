@@ -28,7 +28,7 @@ const apiUrl =  `http://localhost:8080/api/info/${infoId}/info`;
         <div>
           {infoContent !== null ? (
             <div>
-              <p>{infoContent.messageTime}</p>
+              <p>Posted: {infoContent.messageTime}</p>
               <h3>{infoContent.messageSubject}</h3>
               <p>{infoContent.messageContent}</p>
               {/* Add more fields as needed */}

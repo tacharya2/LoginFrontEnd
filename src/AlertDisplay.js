@@ -28,7 +28,7 @@ const apiUrl =  `http://localhost:8080/api/alert/${alertId}/info`;
         <div>
           {alertContent !== null ? (
             <div>
-              <p>{alertContent.messageTime}</p>
+              <p>Posted: {alertContent.messageTime}</p>
               <h3>{alertContent.messageSubject}</h3>
               <p>{alertContent.messageContent}</p>
               {/* Add more fields as needed */}
