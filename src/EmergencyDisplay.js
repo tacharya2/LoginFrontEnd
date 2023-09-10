@@ -28,7 +28,7 @@ const apiUrl =  `http://localhost:8080/api/emergency/${emergencyId}/info`;
         <div>
           {emergencyContent !== null ? (
             <div>
-              <p>{emergencyContent.messageTime}</p>
+              <p>Posted: {emergencyContent.messageTime}</p>
               <h3>{emergencyContent.messageSubject}</h3>
               <p>{emergencyContent.messageContent}</p>
               {/* Add more fields as needed */}

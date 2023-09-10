@@ -28,7 +28,7 @@ const apiUrl =  `http://localhost:8080/api/newsFeed/${newsFeedId}/info`;
         <div>
           {newsFeedContent !== null ? (
             <div>
-              <p>{newsFeedContent.messageTime}</p>
+              <p>Posted: {newsFeedContent.messageTime}</p>
               <h3>{newsFeedContent.messageSubject}</h3>
               <p>{newsFeedContent.messageContent}</p>
               {/* Add more fields as needed */}
