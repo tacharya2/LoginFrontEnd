@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
-import './App.css';
+import Select from 'react-select'; // Import React Select
 import 'react-datepicker/dist/react-datepicker.css';
-
-
+import './App.css';
 
 const AttendanceForm = ({ onAttendanceAdded }) => {
   const [attendanceInfo, setAttendanceInfo] = useState({
@@ -15,91 +14,121 @@ const AttendanceForm = ({ onAttendanceAdded }) => {
     attendanceStatus: '',
     sendEmail: '',
     attendanceDate: moment().format('MM/DD/YYYY'),
-    // Add more fields as needed
   });
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [childNames, setChildNames] = useState([]);
+  const [selectedChild, setSelectedChild] = useState(null);
 
-        const handleInputChange = (event) => {
-          const { name, value } = event.target;
+  useEffect(() => {
+    async function fetchChildNames() {
+      try {
+        const response = await axios.get(
+          'http://localhost:8080/api/attendance/children/names'
+        );
+        const names = response.data.map((child) => ({
+          value: child.fullName, // Display the full name in the dropdown
+          label: `${child.fullName} (ID: ${child.childId})`, // Display full name with childId
+          childId: child.childId, // Store childId separately for use in the handleSubmit
+        }));
+        setChildNames(names);
+      } catch (error) {
+        console.error('Error fetching child names', error);
+      }
+    }
+    fetchChildNames();
+  }, []);
 
-          // Handle special case for the date field
-          if (name === 'attendanceDate') {
-            const formattedDate = value ? moment(value).format('MM/DD/YYYY') : '';
-            setAttendanceInfo((prevInfo) => ({
-              ...prevInfo,
-              [name]: formattedDate,
-            }));
-          } else {
-            setAttendanceInfo((prevInfo) => ({
-              ...prevInfo,
-              [name]: value,
-            }));
-          }
-        };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setAttendanceInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value,
+    }));
+  };
 
-    const handleSubmit = async (event) => {
+  const handleDateChange = (date) => {
+    setAttendanceInfo((prevInfo) => ({
+      ...prevInfo,
+      attendanceDate: moment(date).format('MM/DD/YYYY'),
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // After adding the child, update the UI by calling onAttendanceAdded
-    const url = `http://localhost:8080//api/attendance/addAttendance`;
-    try{
-    setSubmitStatus('submitting...');
-            setTimeout(() => {
-            setSubmitStatus(null);
-            handleResetFormFields();
-          }, 7000);
-    await axios
-            .post(url, attendanceInfo)
-        onAttendanceAdded(attendanceInfo);
-        setSubmitStatus("success");
-        setTimeout(() => {
+    const url = 'http://localhost:8080/api/attendance/addAttendance';
+    try {
+      setSubmitStatus('submitting...');
+      setTimeout(() => {
         setSubmitStatus(null);
         handleResetFormFields();
-      }, 7000); //Success! is displayed for 7 sec
-    }catch(error){
-    console.error("Error submitting child data", error);
-    setSubmitStatus('error')
+      }, 7000);
+
+      await axios.post(url, {
+        ...attendanceInfo,
+        fullName: selectedChild ? selectedChild.value : attendanceInfo.fullName,
+        childId: selectedChild ? selectedChild.childId : attendanceInfo.childId,
+      });
+      onAttendanceAdded(attendanceInfo);
+      setSubmitStatus('success');
+      setTimeout(() => {
+        setSubmitStatus(null);
+        handleResetFormFields();
+      }, 7000);
+    } catch (error) {
+      console.error('Error submitting child data', error);
+      setSubmitStatus('error');
     }
   };
-      const initialFormState = {
-        fullName: '',
-        childId: '',
-        day: '',
-        attendanceStatus: '',
-        sendEmail: '',
-        attendanceDate: moment().format('MM/DD/YYYY'),
-      };
-    const handleResetFormFields = () => {
-      setAttendanceInfo(initialFormState);
-    };
-        const handleDateChange = (name, attendanceDate) => {
-          const formattedDate = attendanceDate ? moment(attendanceDate).format('MM/DD/YYYY') : '';
-          setAttendanceInfo((prevInfo) => ({
-            ...prevInfo,
-            [name]: formattedDate,
-          }));
-        };
+
+  const handleResetFormFields = () => {
+    setAttendanceInfo({
+      fullName: '',
+      childId: '',
+      day: '',
+      attendanceStatus: '',
+      sendEmail: '',
+      attendanceDate: moment().format('MM/DD/YYYY'),
+    });
+    setSelectedChild(null);
+  };
 
   return (
-     <div className="container">
+    <div className="container">
       <div className="form-wrapper">
-      <h3>Add an Attendance</h3>
-      <form onSubmit={handleSubmit}>
-           <div className='form-element'>
-            <label> Child's Full Name:
-              <input required type="text" name="fullName" placeholder="Search by Last Name" value={attendanceInfo.fullName} onChange={handleInputChange}/>
-            </label>
-            </div>
-            <br />
-           <div className='form-element'>
-            <label> Child ID:
-              <input required type="number" name="childId" placeholder="1" value={attendanceInfo.childId} onChange={handleInputChange}/>
-            </label>
-            </div>
-            <br />
-           <div className='form-element'>
-          <label> Day:
-            <select required name="day" value={attendanceInfo.day} onChange={handleInputChange}>
+        <h3>Add an Attendance</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="form-element">
+            <label> Student's Full Name:</label>
+            <Select
+              value={selectedChild}
+              onChange={(selectedOption) => setSelectedChild(selectedOption)}
+              options={childNames}
+              isClearable
+              placeholder="Name(ID) look up"
+            />
+          </div>
+          <br />
+          <div className="form-element">
+            <label> Student ID:</label>
+            <input
+              required
+              type="number"
+              name="childId"
+              placeholder="1"
+              value={attendanceInfo.childId}
+              onChange={handleInputChange}
+            />
+          </div>
+          <br />
+          <div className="form-element">
+            <label> Day:</label>
+            <select
+              required
+              name="day"
+              value={attendanceInfo.day}
+              onChange={handleInputChange}
+            >
               <option value="">Select a day</option>
               <option value="Friday">Friday</option>
               <option value="Saturday">Saturday</option>
@@ -107,48 +136,53 @@ const AttendanceForm = ({ onAttendanceAdded }) => {
               <option value="Other">Other</option>
               <option value="Occasion">Occasion</option>
             </select>
-          </label>
           </div>
           <br />
-           <div className='form-element'>
-          <label> Attendance Status:
-            <select required name="attendanceStatus" value={attendanceInfo.attendanceStatus} onChange={handleInputChange}>
+          <div className="form-element">
+            <label> Attendance Status:</label>
+            <select
+              required
+              name="attendanceStatus"
+              value={attendanceInfo.attendanceStatus}
+              onChange={handleInputChange}
+            >
               <option value="">Select a status</option>
               <option value="Present">Present</option>
               <option value="Partial">Partial</option>
               <option value="Excused">Excused</option>
               <option value="Absent">Absent</option>
             </select>
-          </label>
           </div>
           <br />
-          <div className='form-element'>
-           <label> Date:
-             <DatePicker
-               id="dobField"
-               selected={attendanceInfo.attendanceDate ? moment(attendanceInfo.attendanceDate, 'MM/DD/YYYY').toDate() : null}
-               onChange={(attendanceDate) => handleDateChange('attendanceDate', attendanceDate)}
-               dateFormat="MM/dd/yyyy"
-               showMonthDropdown
-               showYearDropdown
-               dropdownMode="select"
-             />
-   </label>
-           </div>
-            <br />
-        <button type="reset" className="reset" onClick={handleResetFormFields} >Reset Form </button>
-        <button className="submit-button" type="submit">Publish</button>
-
-      </form>
-      {submitStatus === 'success' && (
-        <p style={{ color: 'green' }}>Published successfully!</p>
-      )}
-      {submitStatus === 'error' && (
-        <p style={{ color: 'red' }}>An error occurred. Please try again.</p>
-      )}
-      {submitStatus === 'submitting...' && (
-        <p style={{ color: 'blue' }}>Submitting.....</p>
-      )}
+          <div className="form-element">
+            <label> Date:</label>
+            <DatePicker
+              id="dobField"
+              selected={moment(attendanceInfo.attendanceDate, 'MM/DD/YYYY').toDate()}
+              onChange={handleDateChange}
+              dateFormat="MM/dd/yyyy"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+            />
+          </div>
+          <br />
+          <button type="reset" className="reset" onClick={handleResetFormFields}>
+            Reset Form
+          </button>
+          <button className="submit-button" type="submit">
+            Publish
+          </button>
+        </form>
+        {submitStatus === 'success' && (
+          <p style={{ color: 'green' }}>Published successfully!</p>
+        )}
+        {submitStatus === 'error' && (
+          <p style={{ color: 'red' }}>An error occurred. Please try again.</p>
+        )}
+        {submitStatus === 'submitting...' && (
+          <p style={{ color: 'blue' }}>Submitting.....</p>
+        )}
       </div>
     </div>
   );
