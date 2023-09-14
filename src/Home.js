@@ -7,6 +7,7 @@ import EmergencyId from './EmergencyId';
 import InfoId from './InfoId';
 import NewsFeedId from './NewsFeedId';
 import AnnouncementId from './AnnouncementId';
+import AttendanceForm from './AttendanceForm';
 
 function Home() {
 
@@ -15,6 +16,7 @@ function Home() {
          <h1>Intra-National Support Foundation of America</h1>
             <h2>Welcome to the Home Page</h2>
             <MessageForm />
+            <AttendanceForm/>
             {/* Add your content here */}
             <p>We are growing this page. Please visit it later </p>
             <p className="log-in">Please <Link to="/Login">click here</Link> to log into your account</p>
