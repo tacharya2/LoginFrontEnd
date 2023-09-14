@@ -7,14 +7,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 
 
-const AttendanceForm = ({ onAttendanceAdded, childId }) => {
+const AttendanceForm = ({ onAttendanceAdded }) => {
   const [attendanceInfo, setAttendanceInfo] = useState({
     fullName: '',
     childId: '',
     day: '',
     attendanceStatus: '',
     sendEmail: '',
-    date: moment().format('MM/DD/YYYY'),
+    attendanceDate: moment().format('MM/DD/YYYY'),
     // Add more fields as needed
   });
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -23,7 +23,7 @@ const AttendanceForm = ({ onAttendanceAdded, childId }) => {
           const { name, value } = event.target;
 
           // Handle special case for the date field
-          if (name === 'date') {
+          if (name === 'attendanceDate') {
             const formattedDate = value ? moment(value).format('MM/DD/YYYY') : '';
             setAttendanceInfo((prevInfo) => ({
               ...prevInfo,
@@ -67,13 +67,13 @@ const AttendanceForm = ({ onAttendanceAdded, childId }) => {
         day: '',
         attendanceStatus: '',
         sendEmail: '',
-        date: moment().format('MM/DD/YYYY'),
+        attendanceDate: moment().format('MM/DD/YYYY'),
       };
     const handleResetFormFields = () => {
       setAttendanceInfo(initialFormState);
     };
-        const handleDateChange = (name, date) => {
-          const formattedDate = date ? moment(date).format('MM/DD/YYYY') : '';
+        const handleDateChange = (name, attendanceDate) => {
+          const formattedDate = attendanceDate ? moment(attendanceDate).format('MM/DD/YYYY') : '';
           setAttendanceInfo((prevInfo) => ({
             ...prevInfo,
             [name]: formattedDate,
@@ -123,18 +123,19 @@ const AttendanceForm = ({ onAttendanceAdded, childId }) => {
           </div>
           <br />
           <div className='form-element'>
-            <label htmlFor="dateField">Date:</label>
-            <DatePicker
-              id="dateField"
-              selected={attendanceInfo.date ? new Date(attendanceInfo.date) : null}
-              onChange={(date) => handleDateChange('date', date)}
-              dateFormat="MM/dd/yyyy"
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-            />
-          </div>
-           <br />
+           <label> Date:
+             <DatePicker
+               id="dobField"
+               selected={attendanceInfo.attendanceDate ? moment(attendanceInfo.attendanceDate, 'MM/DD/YYYY').toDate() : null}
+               onChange={(attendanceDate) => handleDateChange('attendanceDate', attendanceDate)}
+               dateFormat="MM/dd/yyyy"
+               showMonthDropdown
+               showYearDropdown
+               dropdownMode="select"
+             />
+   </label>
+           </div>
+            <br />
         <button type="reset" className="reset" onClick={handleResetFormFields} >Reset Form </button>
         <button className="submit-button" type="submit">Publish</button>
 
@@ -152,4 +153,5 @@ const AttendanceForm = ({ onAttendanceAdded, childId }) => {
     </div>
   );
 };
+
 export default AttendanceForm;

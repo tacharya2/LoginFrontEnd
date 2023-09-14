@@ -11,12 +11,15 @@ import AttendanceForm from './AttendanceForm';
 
 function Home() {
 
+    const handleAttendanceAdded = (attendanceInfo) => {
+      console.log('Attendance added:', attendanceInfo);
+    }
     return (
         <div className='page-container'>
          <h1>Intra-National Support Foundation of America</h1>
             <h2>Welcome to the Home Page</h2>
             <MessageForm />
-            <AttendanceForm/>
+            <AttendanceForm onAttendanceAdded={handleAttendanceAdded}/>
             {/* Add your content here */}
             <p>We are growing this page. Please visit it later </p>
             <p className="log-in">Please <Link to="/Login">click here</Link> to log into your account</p>
