@@ -6,22 +6,31 @@ function AttendanceTable({ userId, selectedChildId }) {
   const [currentWeek, setCurrentWeek] = useState([]);
 
   // Function to fetch attendance data
-  const fetchAttendanceData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/attendance/${userId}/${selectedChildId}/getAttendance`
-      );
+const fetchAttendanceData = async () => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/attendance/${userId}/${selectedChildId}/getAttendance`
+    );
+
+    // Ensure that the response data is an array and not empty
+    if (Array.isArray(response.data) && response.data.length > 0) {
+      // Update the state with the response data
       setAttendanceData(response.data);
-      console.log('Attendance =' + response.data);
-    } catch (error) {
-      console.error('Error fetching attendance data:', error);
+      console.log('Attendance =' + JSON.stringify(response.data));
+    } else {
+      // Handle the case where the response data is empty
+      console.log('No attendance data found.');
     }
-  };
+  } catch (error) {
+    console.error('Error fetching attendance data:', error);
+  }
+};
+
 
   useEffect(() => {
     // Fetch attendance data when the component mounts or when selectedChildId changes
     fetchAttendanceData();
-  }, [userId, selectedChildId]);
+  }, [userId, selectedChildId]);                                                                                                                                                                                                                                                                                                              
 
   // Function to update the current week's range
   const updateWeekRange = () => {
